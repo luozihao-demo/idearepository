@@ -1,22 +1,35 @@
 package com.cloud.provider.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.cloud.provider.entity.User;
+import com.cloud.provider.tool.RedisUtil;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
+    @Autowired
+    private RedisUtil redisUtil;
     @GetMapping("/{id}")
     public User findById(@PathVariable Long id) {
-
         User findOne = new User();
         if (id == 1) {
-            findOne.setAge(20);
-            findOne.setName("zhangsan");
-            findOne.setUsername("zhangsan");
-            findOne.setId(1L);
-            findOne.setBalance(800D);
+            //判断redis是否存值
+            if (redisUtil.hasKey("findOne")){
+                User findOne1 = (User) redisUtil.get("findOne");
+                return findOne1;
+            }else{
+                findOne.setAge(20);
+                findOne.setName("zhangsan");
+                findOne.setUsername("zhangsan");
+                findOne.setId(1L);
+                findOne.setBalance(800D);
+                redisUtil.set("findOne",findOne);
+            }
+
         } else {
             findOne.setAge(18);
             findOne.setName("lisi");

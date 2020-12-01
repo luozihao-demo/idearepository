@@ -6,13 +6,32 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://user:123456@localhost:8080/eureka/      #����ע�����ŵ�ַ������BASIC��֤���û���������
+      defaultZone: http://user:123456@localhost:8080/eureka/      #����ע�����ŵ�ַ������BASIC��֤���û���������
   instance:
-    prefer-ip-address: true         #��IPע�ᵽ����ע������
+    prefer-ip-address: true         #��IPע�ᵽ����ע������
 
-#�ſ����нڵ�
+#�ſ����нڵ�
 management:
   endpoints:
     web:
       exposure:
         include: '*'
+
+# Redis数据库索引（默认为0）
+  spring.redis.database: 0
+  # Redis服务器地址
+  spring.redis.host: 127.0.0.1
+  # Redis服务器连接端口
+  spring.redis.port: 6379
+  # Redis服务器连接密码（默认为空）
+  spring.redis.password:
+  # 连接池最大连接数（使用负值表示没有限制）
+  spring.redis.pool.max-active: 200
+  # 连接池最大阻塞等待时间（使用负值表示没有限制）
+  spring.redis.pool.max-wait: -1
+  # 连接池中的最大空闲连接
+  spring.redis.pool.max-idle: 10
+  # 连接池中的最小空闲连接
+  spring.redis.pool.min-idle: 0
+  # 连接超时时间（毫秒）
+  spring.redis.timeout: 1000
